@@ -26,12 +26,12 @@ In this variant, we implement a futures library . For that, we use done , progre
 ## Contribution
 
 * Chen Biao(1377681089@qq.com)
-  * Implement the `MathExpTree.py`
+  * Implement the `futures.py`
   * Write `README.md`
   * Source code framework construction
 
 * Guo Zhaoxin(zhaoxin_guo@163.com)
-  * Implement the `MathExpTree_test.py`
+  * Implement the `futures_test.py`
   * Write `README.md`
   * Created GitHub repository
 
@@ -45,9 +45,9 @@ In this variant, we implement a futures library . For that, we use done , progre
 
 * 20.5.2022 - 2
   * update `README.md`
-* 14.5.2022 - 1
-  * update `MathExpTree.py` and `MathExpTree_test.py`
-* 11.5.2022 - 0
+* 14.6.2022 - 1
+  * update `futures.py` and `futures_test.py`
+* 11.6.2022 - 0
   * Initial.
 
 ## Design notes

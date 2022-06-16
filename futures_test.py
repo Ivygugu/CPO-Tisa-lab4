@@ -73,11 +73,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(t3.cancel(), None)
 
     def test_result_sequence(self):
-        """
-        From this test, job 2 is queue later than job 1, but it get executed
-        before job 1. Because priority has been specified as we want to get job 2
-        result first.
-        """
+
         exe = ThreadPoolExecutor(max_workers=1)
         jobs = {lambda: time.sleep(3): {'priority': 2, 'args': []},
                 lambda: time.sleep(2): {'priority': 1, 'args': []}}

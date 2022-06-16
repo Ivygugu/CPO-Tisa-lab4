@@ -38,7 +38,7 @@ class Future(object):
                 raise CancelledError()
             elif self._state == 'FINISHED':
                 return self._result
-            self._condition.wait(timeout)  # Block until future is done.
+            self._condition.wait(timeout)
             if self._state == 'CANCELLED':
                 raise CancelledError()
             elif self._state == 'FINISHED':
@@ -111,9 +111,8 @@ class ThreadPoolExecutor(object):
         Wake worker thread.
         """
         if len(
-                self._threads) < self._max_workers:  # Running threads must smaller than maximum.
+                self._threads) < self._max_workers:
             t = threading.Thread(target=_worker, args=(self._work_queue,))
-            # When main thread quits, children threads quit as well.
             t.daemon = True
             t.start()
             self._threads.add(t)

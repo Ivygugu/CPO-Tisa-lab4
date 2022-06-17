@@ -26,7 +26,7 @@ class Future(object):
 
     def inProcess(self):
         with self._condition:
-            return self._state == 'RUNNING'
+            return self._state == 'InProcess'
 
     def cancelled(self):
         with self._condition:
@@ -47,7 +47,7 @@ class Future(object):
                 raise TimeoutError()  # Timeout.
 
     def cancel(self):
-        if self._state in ['RUNNING', 'FINISHED']:
+        if self._state in ['InProcess', 'FINISHED']:
             return False
         else:
             self.set_cancelled()
@@ -58,8 +58,8 @@ class Future(object):
             self._state = 'FINISHED'
             self._condition.notify_all()
 
-    def set_running(self):
-        self._state = 'RUNNING'
+    def set_InProcess(self):
+        self._state = 'InProcess'
 
     def set_cancelled(self):
         self._state = 'CANCELLED'
@@ -134,7 +134,7 @@ class _WorkItem(object):
         self.priority = priority
 
     def run(self):
-        self.future.set_running()
+        self.future.set_InProcess()
         if self.kwargs is None:
             result = self.fn(*self.args)
         else:

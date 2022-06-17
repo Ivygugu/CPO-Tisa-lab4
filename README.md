@@ -9,9 +9,9 @@ In this variant, we implement a futures library. For that, we use
 
 ## Project structure description
 
-- `futures.py` -- includes `done`, `progress`, `cancel`, `result`, `methods`
+* `futures.py` -- includes `done`, `progress`, `cancel`, `result`, `methods`
 
-- `futures_test.py`
+* `futures_test.py`
 
 ## Contribution
 

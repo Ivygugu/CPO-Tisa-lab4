@@ -20,11 +20,11 @@ class Future(object):
         self._condition = threading.Condition()
         self._state = 'PENDING'
 
-    def done(self):
+    def isDone(self):
         with self._condition:
             return self._state == 'FINISHED'
 
-    def running(self):
+    def inProcess(self):
         with self._condition:
             return self._state == 'RUNNING'
 
@@ -102,9 +102,6 @@ class ThreadPoolExecutor(object):
 
     def shutdown(self):
         self._work_queue.join()
-
-    def map(self, fn, *iterables, timeout=None, chunksize=1):
-        pass
 
     def _start_working(self):
         """

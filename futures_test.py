@@ -7,7 +7,7 @@ from futures import ThreadPoolExecutor, CancelledError
 
 class MyTestCase(unittest.TestCase):
 
-    def test_done(self):
+    def test_isDone(self):
         def return_future(msg):
             time.sleep(3)
             return msg
@@ -18,14 +18,14 @@ class MyTestCase(unittest.TestCase):
         t2 = pool.submit(return_future, 'b')
 
         time.sleep(1)
-        self.assertEqual(t1.done(), False)
-        self.assertEqual(t2.done(), False)
+        self.assertEqual(t1.isDone(), False)
+        self.assertEqual(t2.isDone(), False)
 
         time.sleep(8)
-        self.assertEqual(t1.done(), True)
-        self.assertEqual(t2.done(), True)
+        self.assertEqual(t1.isDone(), True)
+        self.assertEqual(t2.isDone(), True)
 
-    def test_process(self):
+    def test_InProcess(self):
         def return_future(msg):
             time.sleep(3)
             return msg
@@ -35,9 +35,9 @@ class MyTestCase(unittest.TestCase):
         t1 = pool.submit(return_future, 'a')
         t2 = pool.submit(return_future, 'b')
         t3 = pool.submit(return_future, 'c')
-        self.assertEqual(t1.running(), True)
-        self.assertEqual(t2.running(), True)
-        self.assertEqual(t3.running(), False)
+        self.assertEqual(t1.inProcess(), True)
+        self.assertEqual(t2.inProcess(), True)
+        self.assertEqual(t3.inProcess(), False)
 
     def test_result(self):
         def return_future(msg):
@@ -71,16 +71,6 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(t1.cancel(), False)
         self.assertEqual(t2.cancel(), False)
         self.assertEqual(t3.cancel(), None)
-
-    def test_result_sequence(self):
-
-        exe = ThreadPoolExecutor(max_workers=1)
-        jobs = {lambda: time.sleep(3): {'priority': 2, 'args': []},
-                lambda: time.sleep(2): {'priority': 1, 'args': []}}
-        fs = exe.submit_with_priority(jobs)
-        time.sleep(1)
-        self.assertEqual(fs[0].running(), True)
-        self.assertEqual(fs[1].running(), False)
 
 
 if __name__ == '__main__':

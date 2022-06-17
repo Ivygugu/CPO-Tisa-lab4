@@ -53,8 +53,9 @@ In this variant, we implement a futures library. For that, we use
 
 ## Design notes
 
-* The Python Futures module, located in concurrent. Futures represent operations
-with delays. Futures will wrap the operations in the waiting state and put them
-in the queue. The status of these operations can be queried at any time. Of
-course, their results (or exceptions) can also be obtained after the operation
-is completed. Using futures in some ways can greatly reduce time.
+* The Python Futures module, located in concurrent.
+* Futures represent operations with delays. 
+* Futures will wrap the operations in the waiting state and put them in the queue.
+* The status of these operations can be queried at any time.
+* The results (or exceptions) can also be obtained after the operationis completed.
+* Using futures in some ways can greatly reduce time.

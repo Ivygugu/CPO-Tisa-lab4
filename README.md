@@ -1,28 +1,17 @@
-# Tisa-lab4-variant4
+# Tisa - lab4 - variant4
 
 This repo is the Lab4 of Computational Process Organization in ITMO, 2022 spring.
 
 ## Futures with worker pool
 
-In this variant, we implement a futures library . For that, we use 
+In this variant, we implement a futures library. For that, we use
 `done`, `progress`, `cancel`, `result`, `methods` to run.
 
 ## Project structure description
 
-* `Isdone()` – return True if future evaluation is complete;
+- `futures.py` -- includes `done`, `progress`, `cancel`, `result`, `methods`
 
-* `InProgress()` – return True if future evaluated right now;
-
-* `Result(timeout=None)` return the future execution result (if the future is done);
-
-  * raise the exception (if the future is done and raise an exception);
-
-  * block until the future is done (if the timeout is None and future is not done);
-
-  * raise TimeoutError after timeout 
-  (if the timeout is not None and the future is not done).
-
-* `Cancel()` – cancel a future (if the future not executed).
+- `futures_test.py`
 
 ## Contribution
 
@@ -48,7 +37,7 @@ In this variant, we implement a futures library . For that, we use
 
   * block until the future is done (if the timeout is None and future is not done);
 
-  * raise TimeoutError after timeout (if the timeout is not None 
+  * raise TimeoutError after timeout (if the timeout is not None
   and the future is not done).
 
 * `Cancel()`:  cancel a future (if the future not executed).
@@ -58,14 +47,14 @@ In this variant, we implement a futures library . For that, we use
 * 17.6.2022 - 2
   * update `README.md`
 * 16.6.2022 - 1
-  * update `MathExpTree.py` and `MathExpTree_test.py`
+  * update `futures.py` and `futures_test.py`
 * 16.6.2022 - 0
   * Initial.
 
 ## Design notes
 
-* The Python Futures module, located in concurrent. futures represent operations
+* The Python Futures module, located in concurrent. Futures represent operations
 with delays. Futures will wrap the operations in the waiting state and put them
-in the queue. The status of these operations can be queried at any time. 
-Of course, their results (or exceptions) can also be obtained after the operation
+in the queue. The status of these operations can be queried at any time. Of
+course, their results (or exceptions) can also be obtained after the operation
 is completed. Using futures in some ways can greatly reduce time.

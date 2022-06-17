@@ -14,11 +14,11 @@ In this variant, we implement a futures library . For that, we use done , progre
 
 * Result(timeout=None) return the future execution result (if the future is done);
 
-  **–** raise the exception (if the future is done and raise an exception);
+  * raise the exception (if the future is done and raise an exception);
 
-  **–** block until the future is done (if the timeout is None and future is not done);
+  * block until the future is done (if the timeout is None and future is not done);
 
-  **–** raise TimeoutError after timeout (if the timeout is not None and the future is not done).
+  * raise TimeoutError after timeout (if the timeout is not None and the future is not done).
 
 * Cancel() – cancel a future (if the future not executed).
 
@@ -43,11 +43,11 @@ In this variant, we implement a futures library . For that, we use done , progre
 
 * `Result`:  return the future execution result (if the future is done);
 
-  **–** raise the exception (if the future is done and raise an exception);
+  * raise the exception (if the future is done and raise an exception);
 
-  **–** block until the future is done (if the timeout is None and future is not done);
+  * block until the future is done (if the timeout is None and future is not done);
 
-  **–** raise TimeoutError after timeout (if the timeout is not None and the future is not done).
+  * raise TimeoutError after timeout (if the timeout is not None and the future is not done).
 
 * `Cancel()`:  cancel a future (if the future not executed).
 

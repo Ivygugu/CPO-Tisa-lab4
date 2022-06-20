@@ -66,16 +66,18 @@ class Future(object):
             return False
         else:
             self.set_cancelled()
+            return True
 
     def exception(self) -> Type:
         if self._state in ['InProcess', 'FINISHED']:
             return False
         else:
             self.set_exceptioned()
+            return True
 
     def set_result(self, result: Type) -> None:
         with self._condition:
-            self._result = result
+            self._result = result  # type: ignore
             self._state = 'FINISHED'
             self._condition.notify_all()
 

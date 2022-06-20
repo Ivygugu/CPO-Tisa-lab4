@@ -1,8 +1,10 @@
 import unittest
 
 import time
+from typing import Union
 
 from futures import ThreadPoolExecutor, CancelledError, TimeoutError
+Type = Union[bool, None, str]
 
 
 class MyTestCase(unittest.TestCase):
@@ -78,7 +80,6 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(t1.cancel(), False)
         self.assertEqual(t2.cancel(), False)
         self.assertEqual(t3.cancel(), None)
-
 
 
 if __name__ == '__main__':

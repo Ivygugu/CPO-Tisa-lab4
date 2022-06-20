@@ -59,7 +59,6 @@ class MyTestCase(unittest.TestCase):
             t2.cancel()
             t2.result()
 
-        # error: TimeoutError
         with self.assertRaises(TimeoutError):
             pool = ThreadPoolExecutor(max_workers=1)
             t1 = pool.submit(return_future, 'a')

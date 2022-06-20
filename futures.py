@@ -4,6 +4,7 @@ from typing import Union
 
 Type = Union[bool, None, str]
 
+
 class TimeoutError(Exception):
     def __init__(self) -> None:
         self.msg = 'error: TimeoutError'
@@ -15,10 +16,12 @@ class CancelledError(Exception):
         self.msg = 'error:Future has been cancelled.'
         print(self.msg)
 
+
 class ExceptionError(Exception):
     def __init__(self) -> None:
         self.msg = 'error:ExceptionError.'
         print(self.msg)
+
 
 class Future(object):
     def __init__(self) -> None:
@@ -84,6 +87,7 @@ class Future(object):
 
     def set_exceptioned(self) -> None:
         self._state = 'EXCEPTION'
+
 
 class ThreadPoolExecutor(object):
 

@@ -2,7 +2,7 @@ import unittest
 
 import time
 
-from futures import ThreadPoolExecutor, CancelledError
+from futures import ThreadPoolExecutor, CancelledError, TimeoutError
 
 
 class MyTestCase(unittest.TestCase):
@@ -57,6 +57,13 @@ class MyTestCase(unittest.TestCase):
             t2.cancel()
             t2.result()
 
+        # error: TimeoutError
+        with self.assertRaises(TimeoutError):
+            pool = ThreadPoolExecutor(max_workers=1)
+            t1 = pool.submit(return_future, 'a')
+            t2 = pool.submit(return_future, 'b')
+            t1.result(timeout=1)
+
     def test_cancel(self):
         def return_future(msg):
             time.sleep(3)
@@ -71,6 +78,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(t1.cancel(), False)
         self.assertEqual(t2.cancel(), False)
         self.assertEqual(t3.cancel(), None)
+
 
 
 if __name__ == '__main__':

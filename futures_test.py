@@ -1,14 +1,16 @@
 import unittest
 
 import time
+from typing import Union
 
-from futures import ThreadPoolExecutor, CancelledError
+from futures import ThreadPoolExecutor, CancelledError, TimeoutError
+Type = Union[bool, None, str]
 
 
 class MyTestCase(unittest.TestCase):
 
-    def test_isDone(self):
-        def return_future(msg):
+    def test_isDone(self) -> None:
+        def return_future(msg) -> str:
             time.sleep(3)
             return msg
 
@@ -25,7 +27,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(t1.isDone(), True)
         self.assertEqual(t2.isDone(), True)
 
-    def test_InProcess(self):
+    def test_InProcess(self) -> None:
         def return_future(msg):
             time.sleep(3)
             return msg
@@ -39,7 +41,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(t2.inProcess(), True)
         self.assertEqual(t3.inProcess(), False)
 
-    def test_result(self):
+    def test_result(self) -> None:
         def return_future(msg):
             time.sleep(3)
             return msg
@@ -57,7 +59,13 @@ class MyTestCase(unittest.TestCase):
             t2.cancel()
             t2.result()
 
-    def test_cancel(self):
+        with self.assertRaises(TimeoutError):
+            pool = ThreadPoolExecutor(max_workers=1)
+            t1 = pool.submit(return_future, 'a')
+            t2 = pool.submit(return_future, 'b')
+            t1.result(timeout=1)
+
+    def test_cancel(self) -> None:
         def return_future(msg):
             time.sleep(3)
             return msg

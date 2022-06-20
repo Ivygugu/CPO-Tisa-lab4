@@ -1,38 +1,51 @@
 import queue
 import threading
+from typing import Union
+
+Type = Union[bool, None, str]
 
 
 class TimeoutError(Exception):
-    def __init__(self):
+    def __init__(self) -> None:
         self.msg = 'error: TimeoutError'
         print(self.msg)
 
 
 class CancelledError(Exception):
-    def __init__(self):
+    def __init__(self) -> None:
         self.msg = 'error:Future has been cancelled.'
         print(self.msg)
 
 
+class ExceptionError(Exception):
+    def __init__(self) -> None:
+        self.msg = 'error:ExceptionError.'
+        print(self.msg)
+
+
 class Future(object):
-    def __init__(self):
+    def __init__(self) -> None:
         self._result = None
         self._condition = threading.Condition()
         self._state = 'PENDING'
 
-    def isDone(self):
+    def isDone(self) -> Type:
         with self._condition:
             return self._state == 'FINISHED'
 
-    def inProcess(self):
+    def inProcess(self) -> Type:
         with self._condition:
             return self._state == 'InProcess'
 
-    def cancelled(self):
+    def cancelled(self) -> Type:
         with self._condition:
             return self._state == 'CANCELLED'
 
-    def result(self, timeout=None):
+    def exceptioned(self) -> Type:
+        with self._condition:
+            return self._state == 'EXCEPTION'
+
+    def result(self, timeout=None) -> Type:
         with self._condition:
             if self._state == 'CANCELLED':
                 raise CancelledError()
@@ -41,28 +54,41 @@ class Future(object):
             self._condition.wait(timeout)
             if self._state == 'CANCELLED':
                 raise CancelledError()
+            elif self._state == 'EXCEPTION':
+                raise ExceptionError()
             elif self._state == 'FINISHED':
                 return self._result
             else:
                 raise TimeoutError()  # Timeout.
 
-    def cancel(self):
+    def cancel(self) -> Type:
         if self._state in ['InProcess', 'FINISHED']:
             return False
         else:
             self.set_cancelled()
+            return None
 
-    def set_result(self, result):
+    def exception(self) -> Type:
+        if self._state in ['InProcess', 'FINISHED']:
+            return False
+        else:
+            self.set_exceptioned()
+            return None
+
+    def set_result(self, result: Type) -> None:
         with self._condition:
-            self._result = result
+            self._result = result  # type: ignore
             self._state = 'FINISHED'
             self._condition.notify_all()
 
-    def set_InProcess(self):
+    def set_InProcess(self) -> None:
         self._state = 'InProcess'
 
-    def set_cancelled(self):
+    def set_cancelled(self) -> None:
         self._state = 'CANCELLED'
+
+    def set_exceptioned(self) -> None:
+        self._state = 'EXCEPTION'
 
 
 class ThreadPoolExecutor(object):
